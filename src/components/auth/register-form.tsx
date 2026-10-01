@@ -7,7 +7,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FormField, fieldA11y } from "@/components/shared/form-field";
-import { LazyGoogleSignIn, googleEnabled } from "./lazy-google-sign-in";
+import { LazyGoogleSignIn } from "./lazy-google-sign-in";
+import { GOOGLE_ENABLED } from "@/lib/config";
 import { useSignIn } from "@/hooks/use-sign-in";
 import { getErrorMessage } from "@/lib/api/errors";
 import { cn } from "@/lib/utils";
@@ -139,7 +140,7 @@ export function RegisterForm({ defaultRole, plan }: RegisterFormProps) {
         {signUp.isPending ? "Creating account…" : "Create account"}
       </Button>
 
-      {googleEnabled ? (
+      {GOOGLE_ENABLED ? (
         <>
           <div className="relative text-center text-xs text-muted-foreground uppercase">
             <span className="relative z-10 bg-card px-2">or</span>

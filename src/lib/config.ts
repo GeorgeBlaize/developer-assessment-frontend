@@ -8,8 +8,12 @@ export const API_BASE_URL = (
   "https://developer-assessment-backend.vercel.app/api/v1"
 ).replace(/\/$/, "");
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000")
+).replace(/\/$/, "");
 
 export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? "";
+export const GOOGLE_ENABLED = GOOGLE_CLIENT_ID.length > 0;
 
 export const APP_NAME = "CodeAssess";

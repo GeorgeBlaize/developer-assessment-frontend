@@ -4,7 +4,8 @@ import { Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card } from "@/components/ui/card";
 import { DemoLoginPanel } from "@/components/auth/demo-login-panel";
-import { LazyGoogleSignIn, googleEnabled } from "@/components/auth/lazy-google-sign-in";
+import { LazyGoogleSignIn } from "@/components/auth/lazy-google-sign-in";
+import { GOOGLE_ENABLED } from "@/lib/config";
 import { LoginForm } from "@/components/auth/login-form";
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
 
       <Card className="gap-4 p-6">
         <LoginForm next={next} />
-        {googleEnabled ? (
+        {GOOGLE_ENABLED ? (
           <>
             <div className="relative text-center text-xs text-muted-foreground uppercase">
               <span className="relative z-10 bg-card px-2">or</span>
