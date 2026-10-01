@@ -47,8 +47,9 @@ export function useAssessment(id: string) {
   });
 }
 
-export function useProblems(assessmentId: string) {
+export function useProblems(assessmentId: string, initialData?: Problem[]) {
   return useQuery({
+    initialData,
     queryKey: queryKeys.assessments.problems(assessmentId),
     queryFn: () =>
       api
