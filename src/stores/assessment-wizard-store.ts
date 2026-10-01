@@ -42,6 +42,12 @@ export const useAssessmentWizard = create<WizardState>()(
         }),
       reset: () => set(initial),
     }),
-    { name: "codeassess-assessment-draft", storage: createJSONStorage(() => localStorage), version: 1 },
+    {
+      name: "codeassess-assessment-draft",
+      storage: createJSONStorage(() => localStorage),
+      version: 1,
+      // Rehydrated manually after mount to avoid SSR/client hydration mismatches.
+      skipHydration: true,
+    },
   ),
 );

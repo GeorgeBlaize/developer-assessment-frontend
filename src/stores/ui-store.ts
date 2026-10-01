@@ -21,6 +21,8 @@ export const useUIStore = create<UIState>()(
     {
       name: "codeassess-ui",
       partialize: (s) => ({ sidebarCollapsed: s.sidebarCollapsed }),
+      // Rehydrated after mount (DashboardShell) so server and first client render match.
+      skipHydration: true,
     },
   ),
 );

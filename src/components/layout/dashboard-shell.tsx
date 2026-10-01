@@ -42,6 +42,10 @@ export function DashboardShell({ user, children }: { user: Me; children: ReactNo
   const setUser = useAuthStore((s) => s.setUser);
   const { mobileNavOpen, setMobileNavOpen, sidebarCollapsed, toggleSidebar } = useUIStore();
 
+  useEffect(() => {
+    void useUIStore.persist.rehydrate();
+  }, []);
+
   // Sync the global auth store with the server-fetched profile (also after router.refresh()).
   useEffect(() => setUser(user), [setUser, user]);
 
