@@ -25,7 +25,7 @@ export function PaginationBar({ meta, noun = "results" }: { meta: PaginationMeta
 
   const from = (page - 1) * limit + 1;
   const to = Math.min(page * limit, total);
-  const go = (p: number) => setParams({ page: p === 1 ? null : p });
+  const go = (p: number) => setParams({ page: p === 1 ? null : p }, { push: true });
 
   return (
     <nav aria-label="Pagination" className="flex flex-col items-center justify-between gap-3 sm:flex-row">

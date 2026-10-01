@@ -1,24 +1,25 @@
 "use client";
 
-import { useCallback, useTransition } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 type ParamValue = string | number | null | undefined;
 
 /**
  * Keeps list state (search, filters, sort, page) in the URL so views are bookmarkable and
- * shareable, and the back button works. Any change other than `page` resets to page 1.
+ * shareable. Uses the native History API, which Next.js syncs with useSearchParams: the URL
+ * updates instantly and TanStack Query fetches the new page client-side, without re-running
+ * the server component (which only prefetches on a full load). Any change other than `page`
+ * resets to page 1.
  */
 export function useUrlState() {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
 
   const get = useCallback((key: string) => searchParams.get(key) ?? "", [searchParams]);
 
   const setParams = useCallback(
-    (updates: Record<string, ParamValue>) => {
+    (updates: Record<string, ParamValue>, { push = false }: { push?: boolean } = {}) => {
       const params = new URLSearchParams(searchParams.toString());
       for (const [key, value] of Object.entries(updates)) {
         if (value === null || value === undefined || value === "") params.delete(key);
@@ -26,19 +27,12 @@ export function useUrlState() {
       }
       if (!("page" in updates)) params.delete("page");
       const qs = params.toString();
-      startTransition(() => {
-        router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
-      });
+      const url = qs ? `${pathname}?${qs}` : pathname;
+      if (push) window.history.pushState(null, "", url);
+      else window.history.replaceState(null, "", url);
     },
-    [pathname, router, searchParams],
+    [pathname, searchParams],
   );
 
-  return { get, setParams, searchParams, isPending };
-}
-
-/** Reads a positive integer page number from the URL. */
-export function usePageParam(key = "page") {
-  const searchParams = useSearchParams();
-  const page = Number(searchParams.get(key));
-  return Number.isInteger(page) && page > 0 ? page : 1;
+  return { get, setParams, searchParams };
 }
