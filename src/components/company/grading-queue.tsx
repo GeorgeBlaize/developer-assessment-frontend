@@ -11,7 +11,7 @@ import { FilterSelect } from "@/components/shared/filter-select";
 import { LazyCodeEditor } from "@/components/shared/lazy-code-editor";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { useSubmissions } from "@/hooks/queries/use-company";
-import { formatRelative } from "@/lib/format";
+import { RelativeTime } from "@/components/shared/relative-time";
 import { cn } from "@/lib/utils";
 import type { CompanySubmission, SubmissionStatus } from "@/types/api";
 import { GradeForm } from "./grade-form";
@@ -91,7 +91,7 @@ export function GradingQueue({ assessmentId }: { assessmentId: string }) {
                     <div className="flex flex-wrap items-center gap-2">
                       <StatusBadge status={s.problem.type} label={s.problem.type === "MCQ" ? "MCQ" : undefined} />
                       <StatusBadge status={s.status} />
-                      <span className="text-xs text-muted-foreground">{formatRelative(s.updatedAt)}</span>
+                      <RelativeTime value={s.updatedAt} className="text-xs text-muted-foreground" />
                     </div>
                     <h3 className="font-medium">{s.problem.title}</h3>
                     <p className="text-sm text-muted-foreground">

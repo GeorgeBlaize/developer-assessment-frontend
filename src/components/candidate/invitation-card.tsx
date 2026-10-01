@@ -8,7 +8,8 @@ import { Card } from "@/components/ui/card";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { useRespondToInvitation, useStartAttempt } from "@/hooks/queries/use-candidate";
-import { formatDate, formatDuration, formatRelative } from "@/lib/format";
+import { formatDate, formatDuration } from "@/lib/format";
+import { RelativeTime } from "@/components/shared/relative-time";
 import type { MyInvitation } from "@/types/api";
 
 export function InvitationCard({ invitation: inv }: { invitation: MyInvitation }) {
@@ -73,7 +74,9 @@ export function InvitationCard({ invitation: inv }: { invitation: MyInvitation }
     <Card className="gap-4 p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <StatusBadge status={expired ? "EXPIRED" : inv.status} />
-        <span className="text-xs text-muted-foreground">Invited {formatRelative(inv.invitedAt)}</span>
+        <span className="text-xs text-muted-foreground">
+          Invited <RelativeTime value={inv.invitedAt} />
+        </span>
       </div>
       <div className="space-y-1">
         <h3 className="font-semibold">{inv.assessment.title}</h3>

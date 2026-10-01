@@ -7,7 +7,8 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { useCompanyDashboard, useInvitations } from "@/hooks/queries/use-company";
-import { formatDate, formatRelative } from "@/lib/format";
+import { formatDate } from "@/lib/format";
+import { RelativeTime } from "@/components/shared/relative-time";
 import type { AssessmentStatus, CompanyInvitation } from "@/types/api";
 import { InviteDialog } from "./invite-dialog";
 
@@ -40,7 +41,7 @@ const columns: Column<CompanyInvitation>[] = [
         <span className="text-muted-foreground">—</span>
       ),
   },
-  { key: "invited", header: "Invited", hideOnMobile: true, cell: (inv) => <span className="text-sm">{formatRelative(inv.invitedAt)}</span> },
+  { key: "invited", header: "Invited", hideOnMobile: true, cell: (inv) => <RelativeTime value={inv.invitedAt} className="text-sm" /> },
   { key: "expires", header: "Expires", hideOnMobile: true, cell: (inv) => <span className="text-sm">{formatDate(inv.expiresAt)}</span> },
 ];
 

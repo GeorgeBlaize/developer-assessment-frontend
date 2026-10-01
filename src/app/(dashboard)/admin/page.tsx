@@ -11,7 +11,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { getMe, serverFetch } from "@/lib/api/server";
-import { formatMoney, formatNumber, formatRelative, humanize } from "@/lib/format";
+import { dayKey, formatMoney, formatNumber, formatRelative, humanize } from "@/lib/format";
 import type { AuditLog, PlatformStats } from "@/types/api";
 
 export const metadata: Metadata = { title: "Admin overview" };
@@ -27,10 +27,10 @@ const HIRING_ACTIONS = new Set([
 ]);
 
 function buildActivity(logs: AuditLog[]): ActivityPoint[] {
-  const days = Array.from({ length: 14 }, (_, i) => format(subDays(new Date(), 13 - i), "yyyy-MM-dd"));
+  const days = Array.from({ length: 14 }, (_, i) => dayKey(subDays(new Date(), 13 - i)));
   const buckets = new Map(days.map((d) => [d, { signIns: 0, hiring: 0, other: 0 }]));
   for (const log of logs) {
-    const bucket = buckets.get(format(parseISO(log.createdAt), "yyyy-MM-dd"));
+    const bucket = buckets.get(dayKey(log.createdAt));
     if (!bucket) continue;
     if (SIGN_IN_ACTIONS.has(log.action)) bucket.signIns++;
     else if (HIRING_ACTIONS.has(log.action)) bucket.hiring++;

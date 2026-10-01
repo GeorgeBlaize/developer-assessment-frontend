@@ -17,7 +17,8 @@ import { StatusBadge } from "@/components/shared/status-badge";
 import { useAdminUsers, useDeleteUser, useSetUserStatus } from "@/hooks/queries/use-admin";
 import { useUrlState } from "@/hooks/use-url-state";
 import { ROLE_LABEL } from "@/lib/auth/constants";
-import { formatDate, formatRelative, initials } from "@/lib/format";
+import { formatDate, initials } from "@/lib/format";
+import { RelativeTime } from "@/components/shared/relative-time";
 import { USER_SORTS, userListParams } from "@/lib/list-params";
 import type { UserListItem } from "@/types/api";
 
@@ -60,7 +61,7 @@ export function UsersManager() {
       key: "lastLogin",
       header: "Last active",
       hideOnMobile: true,
-      cell: (u) => <span className="text-sm text-muted-foreground">{formatRelative(u.lastLoginAt, "Never")}</span>,
+      cell: (u) => <RelativeTime value={u.lastLoginAt} fallback="Never" className="text-sm text-muted-foreground" />,
     },
     {
       key: "status",

@@ -13,7 +13,8 @@ import { StatusBadge } from "@/components/shared/status-badge";
 import { useAuditLogs } from "@/hooks/queries/use-admin";
 import { useUrlState } from "@/hooks/use-url-state";
 import { ROLE_LABEL } from "@/lib/auth/constants";
-import { formatDateTime, formatRelative, humanize } from "@/lib/format";
+import { humanize } from "@/lib/format";
+import { RelativeTime } from "@/components/shared/relative-time";
 import { AUDIT_ACTIONS, AUDIT_ENTITY_TYPES, auditLogParams } from "@/lib/list-params";
 import type { AuditLog } from "@/types/api";
 
@@ -80,9 +81,7 @@ export function AuditLogTable() {
       key: "when",
       header: "When",
       cell: (log) => (
-        <time dateTime={log.createdAt} title={formatDateTime(log.createdAt)} className="text-sm whitespace-nowrap">
-          {formatRelative(log.createdAt)}
-        </time>
+        <RelativeTime value={log.createdAt} className="text-sm whitespace-nowrap" />
       ),
     },
     {
