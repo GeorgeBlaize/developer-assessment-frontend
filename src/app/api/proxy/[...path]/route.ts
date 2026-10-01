@@ -13,11 +13,12 @@ import { readAccessToken } from "@/lib/auth/token";
  */
 type Context = { params: Promise<{ path: string[] }> };
 
-const BLOCKED_PREFIXES = ["auth"]; // auth endpoints return raw tokens — only our /api/auth routes may call them
+// These return or consume raw tokens — only our /api/auth/* handlers may call them.
+const BLOCKED_PATHS = new Set(["auth/login", "auth/register", "auth/google", "auth/refresh-token", "auth/logout"]);
 
 async function forward(request: NextRequest, { params }: Context) {
   const { path } = await params;
-  if (BLOCKED_PREFIXES.includes(path[0])) {
+  if (BLOCKED_PATHS.has(path.join("/"))) {
     return NextResponse.json({ success: false, message: "Not found", errors: [] }, { status: 404 });
   }
 
