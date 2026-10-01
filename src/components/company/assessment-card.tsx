@@ -22,7 +22,7 @@ export function AssessmentCard({ assessment: a }: { assessment: AssessmentListIt
         </h3>
         <p className="line-clamp-2 text-sm text-muted-foreground">{a.description}</p>
       </div>
-      <dl className="mt-auto grid grid-cols-3 gap-2 border-t pt-4 text-xs">
+      <dl className="mt-auto flex flex-wrap gap-x-4 gap-y-1.5 border-t pt-4 text-xs whitespace-nowrap text-muted-foreground">
         <div className="flex items-center gap-1.5">
           <FileQuestion className="size-3.5 text-muted-foreground" aria-hidden />
           <dt className="sr-only">Questions</dt>
