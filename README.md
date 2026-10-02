@@ -6,7 +6,7 @@ It consumes the B7A6 REST API: [`developer-assessment-backend`](https://github.c
 
 | | |
 |---|---|
-| **Live frontend** | _add your Vercel URL_ |
+| **Live frontend** | https://developer-assessment-frontend.vercel.app |
 | **Live API** | https://developer-assessment-backend.vercel.app |
 | **API docs** | https://documenter.getpostman.com/view/55118777/2sBYAxP9DY |
 
