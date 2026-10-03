@@ -2,11 +2,16 @@ import { NextResponse, type NextRequest } from "next/server";
 import { callBackend } from "@/lib/api/backend";
 import { clearAuthCookies } from "@/lib/auth/cookies";
 import { REFRESH_COOKIE } from "@/lib/auth/constants";
+import { clientIpHeaders } from "@/lib/api/client-ip";
 
 async function revoke(request: NextRequest) {
   const refreshToken = request.cookies.get(REFRESH_COOKIE)?.value;
   if (refreshToken) {
-    await callBackend("/auth/logout", { method: "POST", body: JSON.stringify({ refreshToken }) });
+    await callBackend("/auth/logout", {
+      method: "POST",
+      body: JSON.stringify({ refreshToken }),
+      headers: clientIpHeaders(request.headers),
+    });
   }
 }
 

@@ -2,11 +2,12 @@ import { NextResponse, type NextRequest } from "next/server";
 import { refreshTokens } from "@/lib/api/backend";
 import { clearAuthCookies, setAuthCookies } from "@/lib/auth/cookies";
 import { REFRESH_COOKIE } from "@/lib/auth/constants";
+import { clientIpHeaders } from "@/lib/api/client-ip";
 
 /** Rotates the token pair. The browser client calls this once (single-flight) on SESSION_EXPIRED. */
 export async function POST(request: NextRequest) {
   const refreshToken = request.cookies.get(REFRESH_COOKIE)?.value;
-  const tokens = refreshToken ? await refreshTokens(refreshToken) : null;
+  const tokens = refreshToken ? await refreshTokens(refreshToken, clientIpHeaders(request.headers)) : null;
 
   if (!tokens) {
     const response = NextResponse.json(

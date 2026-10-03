@@ -3,6 +3,7 @@ import { z } from "zod";
 import { callBackend } from "@/lib/api/backend";
 import { invalidBody, toSessionResponse } from "@/lib/auth/session-response";
 import type { AuthResult } from "@/types/api";
+import { clientIpHeaders } from "@/lib/api/client-ip";
 
 const googleSchema = z.object({
   idToken: z.string().min(1),
@@ -16,6 +17,7 @@ export async function POST(request: NextRequest) {
   const { status, body } = await callBackend<AuthResult>("/auth/google", {
     method: "POST",
     body: JSON.stringify(parsed.data),
+    headers: clientIpHeaders(request.headers),
   });
   return toSessionResponse(status, body);
 }

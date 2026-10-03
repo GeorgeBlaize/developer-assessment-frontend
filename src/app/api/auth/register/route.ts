@@ -3,6 +3,7 @@ import { callBackend } from "@/lib/api/backend";
 import { invalidBody, toSessionResponse } from "@/lib/auth/session-response";
 import { registerSchema } from "@/lib/validations/auth";
 import type { AuthResult } from "@/types/api";
+import { clientIpHeaders } from "@/lib/api/client-ip";
 
 export async function POST(request: NextRequest) {
   const parsed = registerSchema.safeParse(await request.json().catch(() => null));
@@ -19,6 +20,7 @@ export async function POST(request: NextRequest) {
       ...(role === "COMPANY" ? { companyName } : {}),
       ...(role === "CANDIDATE" && phone ? { phone } : {}),
     }),
+    headers: clientIpHeaders(request.headers),
   });
   return toSessionResponse(status, body);
 }

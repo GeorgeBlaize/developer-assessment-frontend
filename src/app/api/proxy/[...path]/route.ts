@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { API_BASE_URL } from "@/lib/config";
 import { ACCESS_COOKIE } from "@/lib/auth/constants";
 import { readAccessToken } from "@/lib/auth/token";
+import { clientIpHeaders } from "@/lib/api/client-ip";
 
 /**
  * Backend-for-frontend proxy: the browser calls /api/proxy/<backend path>, we attach the
@@ -39,6 +40,7 @@ async function forward(request: NextRequest, { params }: Context) {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${token}`,
+        ...clientIpHeaders(request.headers),
         ...(hasBody ? { "Content-Type": request.headers.get("content-type") ?? "application/json" } : {}),
       },
       body: hasBody ? await request.text() : undefined,

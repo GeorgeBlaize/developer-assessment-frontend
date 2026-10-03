@@ -35,10 +35,11 @@ export async function callBackend<T>(
   }
 }
 
-export async function refreshTokens(refreshToken: string): Promise<TokenPair | null> {
+export async function refreshTokens(refreshToken: string, headers: Record<string, string> = {}): Promise<TokenPair | null> {
   const { body } = await callBackend<Omit<AuthResult, "user">>("/auth/refresh-token", {
     method: "POST",
     body: JSON.stringify({ refreshToken }),
+    headers,
   });
   return body.success ? body.data : null;
 }

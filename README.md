@@ -93,6 +93,7 @@ npm run dev                  # http://localhost:3000
 |---|---|---|
 | `API_URL` | yes | Backend base URL incl. `/api/v1` (server-side only) |
 | `NEXT_PUBLIC_SITE_URL` | recommended | Public URL of this app (metadata / Open Graph) |
+| `BFF_SHARED_SECRET` | recommended | Same as the backend's; forwards each visitor's IP so rate limits and audit logs are per user |
 | `JWT_ACCESS_SECRET` | optional | Same as the backend's; enables signature verification in middleware |
 | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | optional | Shows "Sign in with Google" (same client ID as the backend) |
 | `NEXT_PUBLIC_TIME_ZONE` | optional | Display time zone, default `Asia/Dhaka` |

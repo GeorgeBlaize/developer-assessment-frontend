@@ -1,5 +1,5 @@
 import "server-only";
-import { cookies } from "next/headers";
+import { cookies, headers as requestHeaders } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { API_BASE_URL } from "@/lib/config";
@@ -7,6 +7,7 @@ import { ACCESS_COOKIE } from "@/lib/auth/constants";
 import { readAccessToken, type AccessTokenPayload } from "@/lib/auth/token";
 import type { ApiResponse, ApiSuccess, Me } from "@/types/api";
 import { ApiError } from "./errors";
+import { clientIpHeaders } from "./client-ip";
 
 type QueryValue = string | number | boolean | undefined | null;
 
@@ -39,6 +40,7 @@ export async function serverFetch<T>(path: string, options: ServerFetchOptions =
   if (!options.public) {
     const token = (await cookies()).get(ACCESS_COOKIE)?.value;
     if (token) headers.Authorization = `Bearer ${token}`;
+    Object.assign(headers, clientIpHeaders(await requestHeaders()));
   }
 
   let res: Response;

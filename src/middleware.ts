@@ -9,6 +9,7 @@ import {
 import { clearAuthCookies, forwardTokensToRequest, setAuthCookies, type TokenPair } from "@/lib/auth/cookies";
 import { readAccessToken } from "@/lib/auth/token";
 import { refreshTokens } from "@/lib/api/backend";
+import { clientIpHeaders } from "@/lib/api/client-ip";
 
 /**
  * Route protection + role-based access, evaluated at the edge before any page renders:
@@ -36,7 +37,7 @@ export async function middleware(request: NextRequest) {
 
   if (!session && refreshToken) {
     if (isPrefetch) return new NextResponse(null, { status: 204 });
-    rotated = await refreshTokens(refreshToken);
+    rotated = await refreshTokens(refreshToken, clientIpHeaders(request.headers));
     session = rotated ? await readAccessToken(rotated.accessToken) : null;
     refreshFailed = !rotated;
   }
