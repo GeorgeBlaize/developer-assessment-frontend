@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
+import { OfflineBanner } from "@/components/shared/offline-banner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { makeQueryClient } from "@/lib/query-client";
 
@@ -24,6 +25,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
         <TooltipProvider delayDuration={200}>
           {children}
           <Toaster richColors closeButton position="top-right" />
+          <OfflineBanner />
         </TooltipProvider>
         <ReactQueryDevtools buttonPosition="bottom-left" />
       </QueryClientProvider>

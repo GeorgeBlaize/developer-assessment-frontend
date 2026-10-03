@@ -15,7 +15,7 @@ declare module "@tanstack/react-query" {
 
 function shouldRetry(failureCount: number, error: unknown) {
   // Client errors (validation, 403, 404...) won't fix themselves; only retry network/5xx.
-  if (error instanceof ApiError && error.status < 500) return false;
+  if (error instanceof ApiError && error.status >= 400 && error.status < 500) return false;
   return failureCount < 2;
 }
 

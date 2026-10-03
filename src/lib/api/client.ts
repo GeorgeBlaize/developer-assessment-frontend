@@ -36,6 +36,8 @@ function buildUrl(path: string, query?: Record<string, QueryValue>) {
   return url.toString();
 }
 
+const NETWORK_ERROR = "Network error. Check your internet connection and try again.";
+
 async function request<T>(method: string, path: string, options: RequestOptions = {}): Promise<ApiSuccess<T>> {
   const send = () =>
     fetch(buildUrl(path, options.query), {
@@ -43,6 +45,10 @@ async function request<T>(method: string, path: string, options: RequestOptions 
       signal: options.signal,
       headers: options.body !== undefined ? { "Content-Type": "application/json" } : undefined,
       body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+    }).catch((error: unknown) => {
+      // Aborted queries (navigation, filter change) must stay AbortErrors so TanStack ignores them.
+      if (error instanceof DOMException && error.name === "AbortError") throw error;
+      throw new ApiError(NETWORK_ERROR, 0, [], "NETWORK_ERROR");
     });
 
   let res = await send();
@@ -78,6 +84,8 @@ export async function callAppRoute<T>(path: string, body?: unknown): Promise<Api
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: body === undefined ? undefined : JSON.stringify(body),
+  }).catch(() => {
+    throw new ApiError(NETWORK_ERROR, 0, [], "NETWORK_ERROR");
   });
   const json = (await res.json().catch(() => null)) as ApiResponse<T> | null;
   if (!json) throw new ApiError(`Unexpected response from server (${res.status})`, res.status);
