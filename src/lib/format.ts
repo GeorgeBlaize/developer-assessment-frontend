@@ -72,8 +72,8 @@ export function formatRelative(value: string | Date | null | undefined, fallback
 export function formatMoney(amount: string | number, currency = "BDT") {
   const value = typeof amount === "string" ? Number(amount) : amount;
   if (!Number.isFinite(value)) return "—";
-  const symbol = currency === "BDT" ? "৳" : `${currency} `;
-  return `${symbol}${formatNumber(Math.round(value))}`;
+  // Currency code instead of "৳": the Geist font has no Bengali taka glyph.
+  return `${currency} ${formatNumber(Math.round(value))}`;
 }
 
 export function formatNumber(value: number) {
