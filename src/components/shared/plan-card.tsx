@@ -35,7 +35,7 @@ export function PlanCard({ plan, highlighted, current, action }: PlanCardProps) 
         </span>
       ) : null}
       {current ? (
-        <span className="absolute top-0 right-6 -translate-y-1/2 rounded-full bg-success px-3 py-1 text-xs font-medium text-success-foreground">
+        <span className="absolute top-0 right-6 -translate-y-1/2 rounded-full bg-emerald-700 px-3 py-1 text-xs font-medium text-white">
           Current plan
         </span>
       ) : null}

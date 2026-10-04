@@ -38,9 +38,9 @@ export function ExamTimer({ expiresAt, onExpire, onWarning }: ExamTimerProps) {
       className={cn(
         "flex items-center gap-2 rounded-full px-3 py-1.5 font-mono text-sm font-semibold tabular-nums ring-1 transition-colors",
         critical
-          ? "animate-pulse bg-destructive/10 text-destructive ring-destructive/30"
+          ? "animate-pulse bg-destructive/10 text-red-700 ring-destructive/30 dark:text-red-300"
           : low
-            ? "bg-warning/15 text-amber-700 ring-warning/30 dark:text-amber-300"
+            ? "bg-warning/15 text-amber-800 ring-warning/30 dark:text-amber-300"
             : "bg-primary/10 text-primary ring-primary/20",
       )}
     >

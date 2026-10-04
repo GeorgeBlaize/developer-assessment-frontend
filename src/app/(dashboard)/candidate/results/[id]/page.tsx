@@ -90,7 +90,7 @@ export default async function CandidateResultPage({
             <li>Submitted {formatDateTime(attempt.submittedAt, "—")}</li>
           </ul>
           {pendingCount ? (
-            <p className="flex items-center justify-center gap-1.5 text-sm text-amber-700 sm:justify-start dark:text-amber-300">
+            <p className="flex items-center justify-center gap-1.5 text-sm text-amber-800 sm:justify-start dark:text-amber-300">
               <Hourglass className="size-4" aria-hidden /> {pendingCount} answer{pendingCount === 1 ? "" : "s"} awaiting manual grading.
               Your score may increase.
             </p>

@@ -250,7 +250,7 @@ export function ExamWorkspace({ initial }: { initial: AttemptDetail }) {
                     <span
                       className={cn(
                         "grid size-6 shrink-0 place-items-center rounded-full text-xs font-semibold",
-                        answered ? "bg-success text-success-foreground" : "bg-muted text-muted-foreground",
+                        answered ? "bg-emerald-700 text-white dark:bg-success dark:text-success-foreground" : "bg-muted text-muted-foreground",
                       )}
                     >
                       {answered ? <Check className="size-3.5" aria-label="Answered" /> : i + 1}
