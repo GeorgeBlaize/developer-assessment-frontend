@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, Building2, GraduationCap, Loader2, UserPlus } from "lucide-react";
@@ -19,13 +20,11 @@ const ROLE_OPTIONS = [
   { value: "CANDIDATE", title: "I'm a candidate", body: "Take assessments you're invited to", icon: GraduationCap },
 ] as const;
 
-interface RegisterFormProps {
-  defaultRole: RegisterInput["role"];
-  /** Paid plan chosen on the pricing page — company is sent to billing after sign-up. */
-  plan?: string;
-}
-
-export function RegisterForm({ defaultRole, plan }: RegisterFormProps) {
+/** Reads ?role= (pre-selects the account type) and ?plan= (paid plan picked on /pricing). */
+export function RegisterForm() {
+  const searchParams = useSearchParams();
+  const defaultRole: RegisterInput["role"] = searchParams.get("role") === "CANDIDATE" ? "CANDIDATE" : "COMPANY";
+  const plan = searchParams.get("plan") ?? undefined;
   const {
     register,
     handleSubmit,

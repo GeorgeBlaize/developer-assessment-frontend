@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card } from "@/components/ui/card";
 import { RegisterForm } from "@/components/auth/register-form";
 
@@ -8,10 +10,7 @@ export const metadata: Metadata = {
   description: "Join CodeAssess as a hiring company or as a candidate.",
 };
 
-export default async function RegisterPage({ searchParams }: { searchParams: Promise<{ role?: string; plan?: string }> }) {
-  const { role, plan } = await searchParams;
-  const defaultRole = role === "CANDIDATE" ? "CANDIDATE" : "COMPANY";
-
+export default function RegisterPage() {
   return (
     <div className="space-y-6">
       <div className="space-y-1.5 text-center">
@@ -19,7 +18,9 @@ export default async function RegisterPage({ searchParams }: { searchParams: Pro
         <p className="text-muted-foreground">Free to start. Companies begin on the Free plan.</p>
       </div>
       <Card className="p-6">
-        <RegisterForm defaultRole={defaultRole} plan={plan} />
+        <Suspense fallback={<Skeleton className="h-[30rem] w-full" />}>
+          <RegisterForm />
+        </Suspense>
       </Card>
       <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}

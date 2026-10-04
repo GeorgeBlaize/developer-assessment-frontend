@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Building2, GraduationCap, Loader2, ShieldCheck, type LucideIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,8 @@ const ROLE_STYLE: Record<Role, { icon: LucideIcon; tint: string }> = {
 /** One-click demo sign-in for each of the three roles (seeded evaluation accounts). */
 export function DemoLoginPanel() {
   const [activeRole, setActiveRole] = useState<Role | null>(null);
-  const signIn = useSignIn<LoginInput>("/api/auth/login");
+  const next = useSearchParams().get("next");
+  const signIn = useSignIn<LoginInput>("/api/auth/login", { next });
 
   const login = (role: Role) => {
     const account = DEMO_ACCOUNTS.find((a) => a.role === role);
