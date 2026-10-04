@@ -33,7 +33,11 @@ const columns: Column<MyAttempt>[] = [
           {a.totalScore ?? 0}
           <span className="text-muted-foreground"> / {a.assessment.totalMarks}</span>
         </span>
-        <Progress value={a.assessment.totalMarks ? ((a.totalScore ?? 0) / a.assessment.totalMarks) * 100 : 0} className="h-1.5" />
+        <Progress
+          value={a.assessment.totalMarks ? ((a.totalScore ?? 0) / a.assessment.totalMarks) * 100 : 0}
+          className="h-1.5"
+          aria-label={`Score ${a.totalScore ?? 0} of ${a.assessment.totalMarks}`}
+        />
       </div>
     ),
   },

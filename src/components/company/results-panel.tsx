@@ -81,7 +81,11 @@ export function ResultsPanel({ assessmentId }: { assessmentId: string }) {
             {row.totalScore ?? 0}
             <span className="text-muted-foreground"> / {totalMarks}</span>
           </span>
-          <Progress value={totalMarks ? ((row.totalScore ?? 0) / totalMarks) * 100 : 0} className="h-1.5" />
+          <Progress
+            value={totalMarks ? ((row.totalScore ?? 0) / totalMarks) * 100 : 0}
+            className="h-1.5"
+            aria-label={`Score ${row.totalScore ?? 0} of ${totalMarks}`}
+          />
         </div>
       ),
     },

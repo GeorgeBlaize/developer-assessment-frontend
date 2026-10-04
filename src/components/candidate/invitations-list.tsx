@@ -4,9 +4,9 @@ import { useSearchParams } from "next/navigation";
 import { Inbox } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
+import { SegmentedControl } from "@/components/shared/segmented-control";
 import { useMyInvitations } from "@/hooks/queries/use-candidate";
 import { useUrlState } from "@/hooks/use-url-state";
 import type { MyInvitation } from "@/types/api";
@@ -54,16 +54,12 @@ export function InvitationsList() {
 
   return (
     <div className="space-y-5">
-      <Tabs value={view} onValueChange={(v) => setParams({ view: v === "action" ? null : v })}>
-        <TabsList>
-          {(Object.keys(FILTERS) as FilterKey[]).map((key) => (
-            <TabsTrigger key={key} value={key}>
-              {FILTERS[key].label}
-              {counts ? <span className="ml-1 text-xs text-muted-foreground tabular-nums">{counts[key]}</span> : null}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
+      <SegmentedControl
+        label="Filter invitations"
+        value={view}
+        onChange={(v) => setParams({ view: v === "action" ? null : v })}
+        options={(Object.keys(FILTERS) as FilterKey[]).map((key) => ({ value: key, label: FILTERS[key].label, count: counts?.[key] }))}
+      />
 
       {isPending ? (
         <InvitationGridSkeleton />

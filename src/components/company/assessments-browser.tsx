@@ -6,19 +6,19 @@ import { ClipboardList, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ErrorState } from "@/components/shared/error-state";
 import { FilterSelect } from "@/components/shared/filter-select";
 import { PaginationBar } from "@/components/shared/pagination-bar";
 import { SearchInput } from "@/components/shared/search-input";
+import { SegmentedControl } from "@/components/shared/segmented-control";
 import { useAssessments } from "@/hooks/queries/use-company";
 import { useUrlState } from "@/hooks/use-url-state";
 import { ASSESSMENT_SORTS, assessmentListParams } from "@/lib/list-params";
 import { cn } from "@/lib/utils";
 import { AssessmentCard } from "./assessment-card";
 
-const STATUS_TABS = [
+const STATUS_TABS: ReadonlyArray<{ value: string; label: string }> = [
   { value: "ALL", label: "All" },
   { value: "DRAFT", label: "Drafts" },
   { value: "PUBLISHED", label: "Published" },
@@ -53,15 +53,12 @@ export function AssessmentsBrowser() {
   return (
     <div className="space-y-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <Tabs value={params.status ?? "ALL"} onValueChange={(v) => setParams({ status: v === "ALL" ? null : v })}>
-          <TabsList className="w-full sm:w-auto">
-            {STATUS_TABS.map((t) => (
-              <TabsTrigger key={t.value} value={t.value} className="flex-1 sm:flex-none">
-                {t.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+        <SegmentedControl
+          label="Filter by status"
+          value={params.status ?? "ALL"}
+          onChange={(v) => setParams({ status: v === "ALL" ? null : v })}
+          options={STATUS_TABS}
+        />
         <div className="flex flex-col gap-2 sm:flex-row">
           <SearchInput placeholder="Search by title…" />
           <FilterSelect paramKey="sort" label="Sort" options={ASSESSMENT_SORTS} defaultValue="createdAt.desc" />

@@ -21,7 +21,7 @@ export function SidebarNav({ role, collapsed, onNavigate }: SidebarNavProps) {
       {NAVIGATION[role].map((section, i) => (
         <div key={section.title ?? i} className="space-y-1">
           {section.title && !collapsed ? (
-            <p className="px-3 pb-1 text-[11px] font-semibold tracking-wider text-muted-foreground/80 uppercase">
+            <p className="px-3 pb-1 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
               {section.title}
             </p>
           ) : null}
