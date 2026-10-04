@@ -1,5 +1,7 @@
 # CodeAssess — Developer Assessment Platform (Frontend)
 
+[![CI](https://github.com/GeorgeBlaize/developer-assessment-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/GeorgeBlaize/developer-assessment-frontend/actions/workflows/ci.yml)
+
 Next.js 15 (App Router) frontend for the **Developer Assessment & Coding Platform** (B7A7, assignment #4). Companies build coding / MCQ / written assessments, invite candidates to timed attempts and grade them; candidates take the tests and see their results; admins govern users, plans and the audit trail.
 
 It consumes the B7A6 REST API: [`developer-assessment-backend`](https://github.com/GeorgeBlaize/developer-assessment-backend).
@@ -99,7 +101,9 @@ npm run dev                  # http://localhost:3000
 | `NEXT_PUBLIC_TIME_ZONE` | optional | Display time zone, default `Asia/Dhaka` |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | optional | Address used by the contact form |
 
-Scripts: `npm run dev`, `npm run build`, `npm start`, `npm run lint`.
+Scripts: `npm run dev`, `npm run build`, `npm start`, `npm run lint`, `npm run typecheck`.
+
+**CI/CD:** GitHub Actions (`.github/workflows/ci.yml`) lints, type-checks and builds every push and pull request; Vercel deploys `main` to production automatically.
 
 ## Deployment (Vercel)
 
