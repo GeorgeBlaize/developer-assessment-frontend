@@ -8,6 +8,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Next 15 streams <title>/<meta> into the body for dynamic pages; render them in <head> up front
+  // for crawlers, link unfurlers and audit tools (Lighthouse) so SEO metadata is always visible.
+  htmlLimitedBots: /Chrome-Lighthouse|Googlebot|bingbot|DuckDuckBot|Slurp|facebookexternalhit|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp/i,
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],

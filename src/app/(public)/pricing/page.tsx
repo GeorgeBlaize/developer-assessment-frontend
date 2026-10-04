@@ -59,6 +59,7 @@ export default async function PricingPage() {
         </p>
       </div>
 
+      <h2 className="sr-only">Plans</h2>
       {plans ? (
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {plans.map((plan) => (
